@@ -28,4 +28,11 @@ public class AgendamentoService {
         return agendamentoMapper.paraDto(repository.findById(id)
                 .orElseThrow(() -> new AgendamentoNotFoundException("Id não encontrado!")));
     }
+
+    public void cancelarAgendamento(Long id) {
+        var agendamento = repository.findById(id)
+                .orElseThrow(() -> new AgendamentoNotFoundException("Id não encontrado!"));
+
+        repository.save(agendamentoMapper.paraEntityCancelamento(agendamento));
+    }
 }
