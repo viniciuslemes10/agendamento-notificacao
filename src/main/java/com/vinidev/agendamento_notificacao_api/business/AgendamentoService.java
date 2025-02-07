@@ -3,6 +3,7 @@ package com.vinidev.agendamento_notificacao_api.business;
 import com.vinidev.agendamento_notificacao_api.business.mapper.IAgendamentoMapper;
 import com.vinidev.agendamento_notificacao_api.controller.dto.in.AgendamentoRequestDto;
 import com.vinidev.agendamento_notificacao_api.controller.dto.out.AgendamentoResponseDto;
+import com.vinidev.agendamento_notificacao_api.exception.AgendamentoNotFoundException;
 import com.vinidev.agendamento_notificacao_api.infrastruture.repositories.AgendamentoRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,8 @@ public class AgendamentoService {
         return agendamentoMapper.paraDto(agendamento);
     }
 
-
+    public AgendamentoResponseDto buscarAgendamento(Long id) {
+        return agendamentoMapper.paraDto(repository.findById(id)
+                .orElseThrow(() -> new AgendamentoNotFoundException("Id não encontrado!")));
+    }
 }
